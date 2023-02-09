@@ -8,16 +8,23 @@ class NativeRoomPlanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+/*
     // This is used in the platform side to register the view.
     const String viewType = '<platform-view-type>';
     // Pass parameters to the platform side.
     final Map<String, dynamic> creationParams = <String, dynamic>{};
+ */
 
-    return UiKitView(
-      viewType: viewType,
-      layoutDirection: TextDirection.ltr,
-      creationParams: creationParams,
-      creationParamsCodec: const StandardMessageCodec(),
+    return const SizedBox(
+      height: 380,
+      width: 380,
+      child: UiKitView(
+        //viewType: viewType,
+        viewType: 'NativeView',
+        layoutDirection: TextDirection.ltr,
+        //creationParams: creationParams,
+        creationParamsCodec: StandardMessageCodec(),
+      ),
     );
   }
 }

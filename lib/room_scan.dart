@@ -14,10 +14,12 @@ class _RoomScanPageState extends State<RoomScanPage> {
   bool showView = false;
   Future<void> initializeScanner() async {
     try {
-      MethodChannel channel = new MethodChannel("com.nativeActivity/iosChannel");
-      print("result:");
-      final int result = await channel.invokeMethod('StartNativeIOS');
-      print(" $result");
+      MethodChannel channel =
+          const MethodChannel("com.nativeActivity/iosChannel");
+      print("Calling start native:");
+      channel.invokeMethod('StartNativeIOS');
+      await Future.delayed(Duration(seconds: 3));
+      channel.invokeMethod('StopNativeIOS');
     } on PlatformException catch (e) {}
 
     setState(() {
@@ -29,30 +31,30 @@ class _RoomScanPageState extends State<RoomScanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Stack(
-        children: [
-          Visibility(
-            child: roomScanner(),
-            visible: showView,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                    style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(
-                            Colors.greenAccent)),
-                    onPressed: () async {
-                      await initializeScanner();
-                    },
-                    child: const Text("Scan Room", style: TextStyle(fontSize: 22),)),
-              )
-            ],
-          ),
-        ],
-      )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Visibility(
+              visible: showView,
+              child: roomScanner(),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                  style: const ButtonStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll<Color>(Colors.greenAccent)),
+                  onPressed: () async {
+                    await initializeScanner();
+                  },
+                  child: const Text(
+                    "Scan Room",
+                    style: TextStyle(fontSize: 22),
+                  )),
+            )
+          ],
+        ),
+      ),
     );
   }
 

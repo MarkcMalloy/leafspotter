@@ -14,13 +14,18 @@ import Flutter
 
       methodChannel.setMethodCallHandler({
         (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-              
+          
         if call.method == "StartNativeIOS" {
-          let mainVC = RoomCaptureViewController() // Your viewController
-          let navigationController = UINavigationController(rootViewController: mainVC)
-          self.window.rootViewController = navigationController
-          self.window.makeKeyAndVisible()
-        } else {
+            print("STARTING NATIVE IOS NOW")
+            let mainVC = RoomCaptureViewController() // Your viewController
+            let navigationController = UINavigationController(rootViewController: mainVC)
+            self.window.rootViewController = navigationController
+            self.window.makeKeyAndVisible()
+            
+        } else if call.method == "StopNativeIOS" {
+            self.window.backgroundColor = UIColor.red
+        }
+          else {
           result(FlutterMethodNotImplemented)
           return
         }

@@ -30,16 +30,17 @@ class RoomCaptureViewController: UIViewController, RoomCaptureViewDelegate, Room
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .link
         // Set up after loading the view.
         setupRoomCaptureView()
     }
 
     private func setupRoomCaptureView() {
-        roomCaptureView = RoomCaptureView(frame: view.bounds)
+        //roomCaptureView = RoomCaptureView(frame: view.bounds)
+        roomCaptureView = RoomCaptureView(frame: CGRect(x:15, y: 40, width:360, height:680))
         roomCaptureView.captureSession.delegate = self
         roomCaptureView.delegate = self
-
+        roomCaptureView.backgroundColor = UIColor.blue
         view.insertSubview(roomCaptureView, at: 0)
     }
 
@@ -53,14 +54,14 @@ class RoomCaptureViewController: UIViewController, RoomCaptureViewDelegate, Room
         stopSession()
     }
 
-    private func startSession() {
+    public func startSession() {
         isScanning = true
         roomCaptureView?.captureSession.run(configuration: roomCaptureSessionConfig)
 
         setActiveNavBar()
     }
 
-    private func stopSession() {
+    public func stopSession() {
         isScanning = false
         roomCaptureView?.captureSession.stop()
 
